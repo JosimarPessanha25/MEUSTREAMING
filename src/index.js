@@ -1,6 +1,6 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const { handleMessage } = require('./handlers/messageHandler');
-const supabase = require('./db/supabase');
+const { supabase } = require('./db/supabase');
 require('dotenv').config();
 
 // Configuração do Servidor Web e WebSockets

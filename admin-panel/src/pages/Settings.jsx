@@ -1,26 +1,32 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Trash2, UserPlus } from 'lucide-react';
+import { Trash2, UserPlus, Eye, EyeOff, ShieldAlert, Key, Globe, Cpu } from 'lucide-react';
 
 export default function Settings() {
   const [blacklist, setBlacklist] = useState([]);
   const [newNumber, setNewNumber] = useState('');
   const [newName, setNewName] = useState('');
   const [loading, setLoading] = useState(true);
+  
+  // Estados para exibir/ocultar credenciais
+  const [showKeys, setShowKeys] = useState(false);
+  const [supabaseUrl, setSupabaseUrl] = useState('');
+  const [supabaseAnonKey, setSupabaseAnonKey] = useState('');
 
   useEffect(() => {
     fetchBlacklist();
+    loadCredentials();
   }, []);
 
   async function fetchBlacklist() {
     try {
+      setLoading(true);
       const { data, error } = await supabase
         .from('blacklist')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) {
-        // Ignora o erro se a tabela não existir ainda
         if (error.code !== '42P01') {
           console.error('Erro ao buscar blacklist:', error);
         }
@@ -32,6 +38,12 @@ export default function Settings() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function loadCredentials() {
+    // Carregar as chaves do environment do Vite
+    setSupabaseUrl(import.meta.env.VITE_SUPABASE_URL || 'Não configurado');
+    setSupabaseAnonKey(import.meta.env.VITE_SUPABASE_ANON_KEY || 'Não configurado');
   }
 
   async function handleAdd(e) {
@@ -53,7 +65,7 @@ export default function Settings() {
       fetchBlacklist();
     } catch (err) {
       console.error('Erro ao adicionar na blacklist:', err);
-      alert('Erro Supabase: ' + (err.message || JSON.stringify(err)) + '\n\nVerifique se a tabela foi criada.');
+      alert('Erro Supabase: ' + (err.message || JSON.stringify(err)) + '\n\nVerifique se a tabela blacklist existe no banco.');
     }
   }
 
@@ -74,119 +86,158 @@ export default function Settings() {
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ marginBottom: '10px' }}>Configurações do Robô</h1>
-      <p style={{ color: 'var(--text-secondary)', marginBottom: '40px' }}>
-        Gerencie a Lista Negra (Blacklist). Pessoas nesta lista serão ignoradas pelo Robô de Inteligência Artificial.
-      </p>
-
-      <div className="glass-card" style={{ padding: '30px', marginBottom: '40px' }}>
-        <h3 style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <UserPlus size={20} />
-          Adicionar Número à Lista Negra
-        </h3>
-        
-        <form onSubmit={handleAdd} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '15px', alignItems: 'end' }}>
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Nome da Pessoa (Opcional)</label>
-            <input 
-              type="text" 
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              placeholder="Ex: Minha Esposa"
-              style={{
-                width: '100%',
-                padding: '12px',
-                background: 'rgba(0,0,0,0.2)',
-                border: '1px solid var(--glass-border)',
-                borderRadius: '8px',
-                color: 'white'
-              }}
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Número com DDD (Obrigatório)</label>
-            <input 
-              type="text" 
-              value={newNumber}
-              onChange={(e) => setNewNumber(e.target.value)}
-              placeholder="Ex: 5511999999999"
-              required
-              style={{
-                width: '100%',
-                padding: '12px',
-                background: 'rgba(0,0,0,0.2)',
-                border: '1px solid var(--glass-border)',
-                borderRadius: '8px',
-                color: 'white'
-              }}
-            />
-          </div>
-          <button 
-            type="submit"
-            style={{
-              padding: '12px 24px',
-              background: 'var(--primary)',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              height: '45px'
-            }}
-          >
-            Bloquear
-          </button>
-        </form>
+    <div className="fade-in" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <div style={{ marginBottom: '35px' }}>
+        <h1 style={{ margin: 0 }}>Configurações do Robô</h1>
+        <p style={{ color: 'var(--text-secondary)', margin: '5px 0 0 0' }}>
+          Gerencie a lista negra de contatos e visualize os parâmetros do seu sistema.
+        </p>
       </div>
 
-      <div className="glass-card" style={{ padding: '30px' }}>
-        <h3 style={{ marginBottom: '20px' }}>Pessoas Ignoradas ({blacklist.length})</h3>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.8fr', gap: '30px', alignItems: 'start', marginBottom: '40px' }}>
         
-        {loading ? (
-          <p>Carregando lista...</p>
-        ) : blacklist.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
-            Nenhum número na lista negra. O robô está respondendo a todos.
+        {/* Coluna Esquerda: Adicionar + Credenciais */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+          
+          {/* Card Adicionar Bloqueado */}
+          <div className="glass-panel" style={{ padding: '25px' }}>
+            <h3 style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <UserPlus size={20} style={{ color: 'var(--primary)' }} />
+              Bloquear Contato
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '20px', lineHeight: '1.4' }}>
+              Contatos nesta lista serão ignorados automaticamente pela IA do robô.
+            </p>
+            
+            <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600' }}>Nome ou Apelido (Opcional)</label>
+                <input 
+                  type="text" 
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  placeholder="Ex: Minha Esposa"
+                  style={{ width: '100%', boxSizing: 'border-box' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600' }}>Número com DDD (Obrigatório)</label>
+                <input 
+                  type="text" 
+                  value={newNumber}
+                  onChange={(e) => setNewNumber(e.target.value)}
+                  placeholder="Ex: 5521999999999"
+                  required
+                  style={{ width: '100%', boxSizing: 'border-box' }}
+                />
+              </div>
+              <button type="submit" className="btn-danger" style={{ width: '100%', height: '42px', marginTop: '5px' }}>
+                <ShieldAlert size={18} />
+                Bloquear Número
+              </button>
+            </form>
           </div>
-        ) : (
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '1px solid var(--glass-border)', textAlign: 'left' }}>
-                <th style={{ padding: '15px' }}>Nome</th>
-                <th style={{ padding: '15px' }}>Telefone</th>
-                <th style={{ padding: '15px', textAlign: 'right' }}>Ação</th>
-              </tr>
-            </thead>
-            <tbody>
-              {blacklist.map((item) => (
-                <tr key={item.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                  <td style={{ padding: '15px' }}>{item.name || 'Sem nome'}</td>
-                  <td style={{ padding: '15px', fontFamily: 'monospace' }}>{item.phone_number}</td>
-                  <td style={{ padding: '15px', textAlign: 'right' }}>
-                    <button 
-                      onClick={() => handleRemove(item.id)}
-                      style={{
-                        background: 'rgba(239, 68, 68, 0.1)',
-                        color: 'var(--danger)',
-                        border: '1px solid rgba(239, 68, 68, 0.3)',
-                        padding: '8px 16px',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '8px'
-                      }}
-                    >
-                      <Trash2 size={16} />
-                      Desbloquear
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+
+          {/* Card Parâmetros do Sistema */}
+          <div className="glass-panel" style={{ padding: '25px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+              <h3 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Cpu size={20} style={{ color: 'var(--primary)' }} />
+                Sistema
+              </h3>
+              <button 
+                onClick={() => setShowKeys(!showKeys)} 
+                className="btn-secondary" 
+                style={{ padding: '6px 12px', fontSize: '0.8rem', gap: '5px' }}
+              >
+                {showKeys ? <EyeOff size={14} /> : <Eye size={14} />}
+                {showKeys ? 'Ocultar' : 'Exibir'}
+              </button>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div style={{ display: 'flex', alignItems: 'start', gap: '12px' }}>
+                <Globe size={16} style={{ color: 'var(--text-muted)', marginTop: '3px' }} />
+                <div>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>Supabase URL</span>
+                  <div style={{ fontSize: '0.85rem', color: 'white', wordBreak: 'break-all', fontFamily: 'monospace', marginTop: '3px' }}>
+                    {supabaseUrl}
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'start', gap: '12px' }}>
+                <Key size={16} style={{ color: 'var(--text-muted)', marginTop: '3px' }} />
+                <div>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>Chave Pública (Anon Key)</span>
+                  <div style={{ fontSize: '0.85rem', color: 'white', wordBreak: 'break-all', fontFamily: 'monospace', marginTop: '3px' }}>
+                    {showKeys ? supabaseAnonKey : '••••••••••••••••••••••••••••••••'}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Coluna Direita: Lista de Bloqueados */}
+        <div className="glass-panel" style={{ padding: '30px', minHeight: '400px' }}>
+          <h3 style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            Lista Negra ({blacklist.length})
+          </h3>
+
+          {loading ? (
+            <p style={{ color: 'var(--text-secondary)' }}>Carregando números...</p>
+          ) : blacklist.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+              Nenhum número na lista negra. O robô está respondendo a todos normalmente.
+            </div>
+          ) : (
+            <div className="table-container" style={{ border: 'none', margin: 0 }}>
+              <table className="data-table" style={{ background: 'transparent' }}>
+                <thead>
+                  <tr style={{ background: 'transparent' }}>
+                    <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)' }}>Nome</th>
+                    <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)' }}>Telefone</th>
+                    <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)', textAlign: 'right' }}>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {blacklist.map((item) => (
+                    <tr key={item.id}>
+                      <td style={{ padding: '15px 12px', fontWeight: '600' }}>
+                        {item.name || <span style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontWeight: 'normal' }}>Sem nome</span>}
+                      </td>
+                      <td style={{ padding: '15px 12px', fontFamily: 'monospace' }}>
+                        {item.phone_number}
+                      </td>
+                      <td style={{ padding: '15px 12px', textAlign: 'right' }}>
+                        <button 
+                          onClick={() => handleRemove(item.id)}
+                          className="btn-danger"
+                          style={{
+                            background: 'rgba(239, 68, 68, 0.1)',
+                            color: 'var(--danger)',
+                            border: '1px solid rgba(239, 68, 68, 0.2)',
+                            padding: '6px 12px',
+                            borderRadius: '8px',
+                            fontSize: '0.8rem',
+                            boxShadow: 'none',
+                            gap: '4px'
+                          }}
+                        >
+                          <Trash2 size={12} />
+                          Desbloquear
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+
       </div>
     </div>
   );

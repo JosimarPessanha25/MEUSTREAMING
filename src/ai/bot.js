@@ -24,8 +24,8 @@ async function getAiResponse(systemPrompt, userMessage) {
                     content: userMessage
                 }
             ],
-            // Você pode trocar o modelo, ex: llama3-70b-8192 ou llama3-8b-8192
-            model: 'llama3-70b-8192', 
+            // Você pode trocar o modelo, ex: llama-3.3-70b-versatile ou llama-3.1-8b-instant
+            model: 'llama-3.3-70b-versatile', 
             temperature: 0.7,
             max_tokens: 1024,
         });
