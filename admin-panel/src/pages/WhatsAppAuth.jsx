@@ -9,7 +9,11 @@ export default function WhatsAppAuth() {
   useEffect(() => {
     // Conecta ao servidor backend do Robô apenas quando a tela for aberta
     const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
-    const socket = io(backendUrl);
+    const socket = io(backendUrl, {
+      extraHeaders: {
+        "Bypass-Tunnel-Reminder": "true"
+      }
+    });
 
     // Ouve os eventos do Backend
     socket.on('status', (currentStatus) => {
