@@ -1,0 +1,38 @@
+.neon-glow {
+    box-shadow: 0 0 15px rgba(0, 209, 255, 0.4);
+}
+.neon-glow-green {
+    box-shadow: 0 0 15px rgba(76, 217, 232, 0.4);
+}
+.gold-gradient {
+    background: linear-gradient(135deg, #FFDF00 0%, #D4AF37 50%, #996515 100%);
+}
+.gold-glow {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+}
+.glass-panel {
+    background: rgba(41, 41, 54, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(139, 145, 152, 0.2);
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.animate-scroll {
+    animation: scroll 600s linear infinite;
+}
+
+/* Hide scrollbar for horizontal carousels */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.hover\:\[animation-play-state\:paused\]:hover {
+    animation-play-state: paused;
+}

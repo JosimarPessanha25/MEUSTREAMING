@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MEU STREAM</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwRTVGRiI+PHBhdGggZD0iTTggNXYxNGwxMS03eiIvPjwvc3ZnPg==">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            "colors": {
+                "outline-variant": "#414754",
+                "on-secondary": "#00363d",
+                "surface-container-lowest": "#0d0d19",
+                "error-container": "#93000a",
+                "secondary-fixed-dim": "#4cd9e8",
+                "on-surface-variant": "#c0c7cd",
+                "surface-bright": "#383846",
+                "secondary-fixed": "#82f6ff",
+                "on-surface": "#e2e2ec",
+                "on-error": "#690005",
+                "on-primary-fixed": "#001f27",
+                "tertiary-container": "#3d4a66",
+                "on-primary": "#003643",
+                "inverse-primary": "#00687e",
+                "on-error-container": "#ffdad6",
+                "on-secondary-container": "#001f24",
+                "secondary-container": "#004f58",
+                "surface-container-low": "#1a1a27",
+                "surface-container-highest": "#333341",
+                "tertiary-fixed": "#dbe1ff",
+                "on-background": "#e2e2ec",
+                "on-secondary-fixed": "#001f24",
+                "primary-fixed": "#9ee1f9",
+                "surface-tint": "#00d1ff",
+                "outline": "#8b9198",
+                "primary-container": "#004e5f",
+                "on-secondary-fixed-variant": "#004f58",
+                "secondary": "#4cd9e8",
+                "on-tertiary-container": "#dbe1ff",
+                "error": "#ffb4ab",
+                "primary-fixed-dim": "#57d6f6",
+                "on-tertiary-fixed-variant": "#3d4a66",
+                "on-tertiary-fixed": "#0f1a34",
+                "tertiary": "#b3c5ff",
+                "inverse-on-surface": "#2e2f3d",
+                "on-primary-container": "#9ee1f9",
+                "inverse-surface": "#e2e2ec",
+                "surface-variant": "#414754",
+                "surface-container": "#1e1e2b",
+                "tertiary-fixed-dim": "#b3c5ff",
+                "primary": "#00d1ff",
+                "surface-dim": "#12121f",
+                "background": "#12121f",
+                "surface": "#12121f",
+                "on-tertiary": "#24304d",
+                "surface-container-high": "#292936",
+                "on-primary-fixed-variant": "#004e5f"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.5rem",
+                "lg": "0.75rem",
+                "xl": "1rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "unit": "8px",
+                "container-max": "1280px",
+                "margin-mobile": "16px",
+                "gutter": "24px",
+                "margin-desktop": "48px"
+            },
+            "fontFamily": {
+                "headline-lg": ["Anton"],
+                "label-caps": ["JetBrains Mono"],
+                "headline-lg-mobile": ["Anton"],
+                "display-lg": ["Anton"],
+                "body-lg": ["Hanken Grotesk"],
+                "headline-xl": ["Anton"],
+                "body-md": ["Hanken Grotesk"],
+                "price-lg": ["Anton"]
+            },
+            "fontSize": {
+                "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "500" }],
+                "headline-xl": ["48px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                "price-lg": ["56px", { "lineHeight": "1.0", "fontWeight": "400" }]
+            }
+        }
+    }
+};
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- Header (Shared Component Mapping) -->
+<header class="bg-background/80 backdrop-blur-xl docked full-width top-0 sticky z-50 border-b border-outline-variant/30 shadow-lg shadow-primary/20">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="font-headline-lg text-[24px] md:text-[32px] text-primary uppercase tracking-tighter">
+                MEU STREAM
+            </div>
+<nav class="hidden md:flex gap-gutter items-center">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Início</a>
+<a class="font-label-caps text-label-caps text-primary font-bold border-b-2 border-primary pb-1" href="#planos">Planos</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#suporte">Suporte</a>
+<a class="font-label-caps text-label-caps text-tertiary hover:text-tertiary-fixed transition-colors duration-300 cursor-pointer" onclick="openFeedbackModal()">Pedidos/Bugs</a>
+</nav>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-DEFAULT neon-glow hover:scale-95 active:scale-90 transition-transform hidden md:block font-bold" onclick="openTriageModal('Header - Assine Agora')">
+                ASSINE AGORA
+            </button>
+<!-- Mobile Menu Icon -->
+<button class="md:hidden text-primary" onclick="toggleMobileMenu()">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu</span>
+</button>
+</div>
+<!-- Mobile Menu Panel -->
+<div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-surface-container-highest border-b border-outline-variant/30 flex flex-col px-margin-mobile py-4 gap-4 shadow-xl z-40 origin-top animate-[slideDown_0.2s_ease-out]">
+    <a class="font-label-caps text-label-caps text-on-surface hover:text-primary transition-colors duration-300 py-2 border-b border-outline-variant/20" href="#" onclick="toggleMobileMenu()">Início</a>
+    <a class="font-label-caps text-label-caps text-primary font-bold py-2 border-b border-outline-variant/20" href="#planos" onclick="toggleMobileMenu()">Planos</a>
+    <a class="font-label-caps text-label-caps text-on-surface hover:text-primary transition-colors duration-300 py-2 border-b border-outline-variant/20" href="#suporte" onclick="toggleMobileMenu()">Suporte</a>
+    <a class="font-label-caps text-label-caps text-tertiary hover:text-tertiary-fixed transition-colors duration-300 py-2 border-b border-outline-variant/20 cursor-pointer" onclick="toggleMobileMenu(); openFeedbackModal()">Pedidos/Bugs</a>
+    <button class="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-DEFAULT neon-glow active:scale-95 transition-transform font-bold mt-2 w-full" onclick="toggleMobileMenu(); openTriageModal('Header Mobile - Assine Agora')">
+        ASSINE AGORA
+    </button>
+</div>
+</header>
+
+<!-- Sticky Mobile App CTA -->
+<div class="fixed bottom-4 left-4 right-4 z-[45] md:hidden">
+    <button class="w-full bg-secondary text-surface-container-lowest font-headline-lg text-[18px] uppercase py-4 rounded-xl shadow-2xl shadow-secondary/40 font-bold transition-transform active:scale-95" onclick="openTriageModal('Sticky Mobile App Bar')">
+        TESTE GRÁTIS AGORA
+    </button>
+</div>
+<!-- Hero Section -->
+<section id="hero-section" class="relative min-h-[100dvh] md:min-h-[819px] flex items-center justify-center pt-24 pb-16 px-margin-mobile md:px-margin-desktop overflow-hidden bg-background">
+<!-- Dynamic TMDB Background Images for Crossfade -->
+<div id="hero-bg-1" class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-0 transition-opacity duration-[2000ms] z-0"></div>
+<div id="hero-bg-2" class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-0 transition-opacity duration-[2000ms] z-0"></div>
+<!-- Heavy gradient overlays to ensure text readability -->
+<div class="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background z-0"></div>
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent z-0"></div>
+<div class="relative z-10 max-w-4xl mx-auto text-center space-y-8">
+<h1 class="font-display-lg text-[48px] md:text-[80px] text-on-background uppercase drop-shadow-2xl leading-none">
+                A Sua Melhor Opção de <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-tertiary">Entretenimento Premium</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Canais ao Vivo, Filmes e Séries sem travamentos. A experiência de cinema direto na sua casa, em qualquer tela.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
+<a class="w-full sm:w-auto bg-primary-container text-on-primary-container font-headline-lg text-[20px] md:text-[24px] px-8 py-4 rounded-DEFAULT neon-glow hover:bg-primary transition-colors text-center" href="#planos">
+                    VER PLANOS
+                </a>
+<a class="w-full sm:w-auto flex items-center justify-center gap-2 bg-transparent border-2 border-secondary text-secondary font-headline-lg text-[20px] md:text-[24px] px-8 py-4 rounded-DEFAULT neon-glow-green hover:bg-secondary/10 transition-colors text-center" href="#" onclick="event.preventDefault(); openTriageModal('Hero - Teste Grátis')">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                    TESTE GRÁTIS
+                </a>
+</div>
+</div>
+</section>
+<!-- TMDB Carousel Section -->
+<section class="py-12 bg-background overflow-hidden relative border-t border-outline-variant/20">
+    <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-6 flex justify-between items-end">
+        <div>
+            <h2 class="font-headline-lg text-[28px] md:text-[36px] text-on-surface uppercase leading-tight">Em Alta na Semana</h2>
+            <p class="font-body-md text-on-surface-variant mb-1">Lançamentos e sucessos globais disponíveis no nosso catálogo.</p>
+            <p class="font-label-caps text-primary text-sm flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">ads_click</span> Clique nas capas para saber mais</p>
+        </div>
+        <div class="hidden md:flex gap-2 items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-secondary w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M16.5 10.5c-.88-.75-1.5-1.84-1.5-3.04 0-.17.02-.34.05-.51-.92.83-1.55 2.06-1.55 3.43 0 1.25.5 2.38 1.31 3.22-.8.67-1.31 1.67-1.31 2.78 0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5c0-1.8-1.33-3.29-3.08-3.48-.05-.01-.11-.01-.16-.01-.36 0-.71.07-1.03.2.14-.52.27-1.07.27-1.59zM12 2c-.37 0-.74.05-1.11.12.98.81 1.61 2.05 1.61 3.43 0 1.34-.6 2.54-1.54 3.33-.89-.59-1.95-.94-3.08-.94-1.55 0-2.96.63-3.98 1.65.65-1.06 1.77-1.78 3.06-1.78.36 0 .72.05 1.06.15-1.02-1.01-1.66-2.42-1.66-3.96C6.36 4.35 6.64 4.7 6.94 5.02 5.09 6.8 4 9.27 4 12c0 4.42 3.58 8 8 8 1.48 0 2.87-.41 4.07-1.11-1.16-.76-1.94-2.06-1.94-3.52 0-.64.15-1.25.42-1.79-.85-.35-1.46-1.18-1.46-2.16 0-1.14.8-2.09 1.88-2.31-.38-.99-.59-2.06-.59-3.17 0-1.11.21-2.18.59-3.17C13.88 2.09 13.08 2 12 2z"/></svg>
+            <span class="font-label-caps text-secondary font-bold">ATUALIZADO HOJE</span>
+        </div>
+    </div>
+    
+    <!-- Carousel Track -->
+    <div class="relative w-full overflow-hidden flex items-center group">
+        <!-- Fade masks -->
+        <div class="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
+        
+        <div id="movie-carousel" class="flex px-4 py-4 w-max animate-scroll hover:[animation-play-state:paused]">
+            <!-- JS will inject posters here -->
+            <div class="w-[120px] md:w-[200px] h-[180px] md:h-[300px] bg-surface-bright rounded-lg animate-pulse"></div>
+            <div class="w-[120px] md:w-[200px] h-[180px] md:h-[300px] bg-surface-bright rounded-lg animate-pulse"></div>
+            <div class="w-[120px] md:w-[200px] h-[180px] md:h-[300px] bg-surface-bright rounded-lg animate-pulse"></div>
+            <div class="w-[120px] md:w-[200px] h-[180px] md:h-[300px] bg-surface-bright rounded-lg animate-pulse"></div>
+            <div class="w-[120px] md:w-[200px] h-[180px] md:h-[300px] bg-surface-bright rounded-lg animate-pulse"></div>
+        </div>
+    </div>
+</section>
+<!-- Feedback/Request Banner -->
+<section class="py-12 px-margin-mobile md:px-margin-desktop bg-surface-container-low border-t border-outline-variant/20">
+    <div class="max-w-container-max mx-auto flex flex-col md:flex-row items-center justify-between gap-6 glass-panel p-8 rounded-2xl border-l-4 border-tertiary relative overflow-hidden">
+        <div class="absolute right-0 top-0 opacity-10 pointer-events-none hidden md:block">
+            <span class="material-symbols-outlined text-[150px] -mt-4 -mr-4" style="font-variation-settings: 'FILL' 1;">rate_review</span>
+        </div>
+        <div class="flex items-center gap-6 relative z-10 text-center md:text-left">
+            <div class="hidden md:flex w-16 h-16 rounded-full bg-surface-container-high items-center justify-center border border-tertiary/30 text-tertiary shrink-0">
+                <span class="material-symbols-outlined text-[32px]">movie_filter</span>
+            </div>
+            <div>
+                <h3 class="font-headline-lg text-[24px] md:text-[28px] text-on-surface uppercase leading-tight mb-2">Não encontrou o que procurava?</h3>
+                <p class="font-body-md text-on-surface-variant">Sua série favorita está faltando ou encontrou algum erro? Deixe a gente saber!</p>
+            </div>
+        </div>
+        <button onclick="openFeedbackModal()" class="w-full md:w-auto shrink-0 bg-tertiary text-on-tertiary font-headline-lg text-[18px] uppercase px-8 py-4 rounded-DEFAULT neon-glow hover:scale-105 active:scale-95 transition-all shadow-lg shadow-tertiary/20 flex items-center justify-center gap-2 relative z-10">
+            <span class="material-symbols-outlined">campaign</span>
+            FAZER SOLICITAÇÃO
+        </button>
+    </div>
+</section>
+<!-- Benefits Grid -->
+<section class="py-16 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-outline-variant/20">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Benefit 1 -->
+<div class="glass-panel p-6 rounded-lg flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center border border-primary/30 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">4k</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-[24px] uppercase text-on-surface">Canais 4K/FHD</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Imagem em alta definição.</p>
+</div>
+</div>
+<!-- Benefit 2 -->
+<div class="glass-panel p-6 rounded-lg flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center border border-tertiary/30 text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-[24px] uppercase text-on-surface">Suporte 24h</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Atendimento especializado.</p>
+</div>
+</div>
+<!-- Benefit 3 -->
+<div class="glass-panel p-6 rounded-lg flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center border border-secondary-container/30 text-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-[24px] uppercase text-on-surface">Instalação Rápida</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Configuração simples.</p>
+</div>
+</div>
+<!-- Benefit 4 -->
+<div class="glass-panel p-6 rounded-lg flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center border border-primary/30 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">devices</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-[24px] uppercase text-on-surface">2 Telas</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Assista simultaneamente.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Section -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop relative" id="planos">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-xl text-headline-xl md:text-[56px] text-on-background uppercase">Escolha seu Plano</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-4">Sem fidelidade, cancele quando quiser.</p>
+</div>
+<div class="md:hidden flex justify-center items-center text-on-surface-variant font-label-caps text-[14px] mb-6 animate-pulse gap-2">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">swipe</span>
+    Deslize para ver os planos
+    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+<div class="flex overflow-x-auto md:overflow-visible md:grid md:grid-cols-3 gap-6 md:gap-8 items-stretch md:items-center pb-8 md:py-12 snap-x snap-mandatory hide-scrollbar w-full">
+<!-- Monthly Plan -->
+<div class="w-[85vw] md:w-auto shrink-0 snap-center glass-panel rounded-xl p-8 border-t-4 border-tertiary flex flex-col h-full relative overflow-hidden">
+<div class="absolute top-4 right-4 bg-tertiary/20 text-tertiary font-label-caps text-label-caps px-3 py-1 rounded-full shadow-sm">
+                        Ideal para teste
+                    </div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface uppercase mb-2 mt-4 text-left">Mensal</h3>
+<div class="flex flex-row items-baseline gap-1 mb-6 text-left">
+<span class="font-body-lg text-[18px] text-on-surface-variant">R$</span>
+<span class="font-price-lg text-[48px] md:text-[56px] text-tertiary leading-none">29<span class="text-[20px] md:text-[32px]">,90</span></span>
+<span class="font-body-md text-[16px] text-on-surface-variant">/mês</span>
+</div>
+<ul class="space-y-4 mb-8 flex-grow">
+<li class="flex items-center gap-3 text-on-surface-variant text-[16px] leading-tight">
+<span class="material-symbols-outlined text-tertiary text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Todos os canais liberados
+                        </li>
+<li class="flex items-center gap-3 text-on-surface-variant text-[16px] leading-tight">
+<span class="material-symbols-outlined text-tertiary text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Filmes e Séries
+                        </li>
+<li class="flex items-center gap-3 text-on-surface-variant text-[16px] leading-tight">
+<span class="material-symbols-outlined text-tertiary text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            2 Telas simultâneas
+                        </li>
+</ul>
+<button class="w-full bg-surface-container-high text-on-surface font-headline-lg text-[20px] uppercase py-3 rounded-DEFAULT hover:bg-tertiary hover:text-on-tertiary transition-colors border border-outline-variant" onclick="openTriageModal('Plano Mensal')">
+                        Assinar Mensal
+                    </button>
+</div>
+<!-- Annual Plan (Gold/Featured) -->
+<div class="w-[85vw] md:w-auto shrink-0 snap-center bg-surface-container-low rounded-xl p-8 md:scale-110 relative z-10 border-2 border-[#D4AF37] gold-glow flex flex-col h-full overflow-hidden shadow-2xl shadow-[#D4AF37]/20">
+<!-- Premium gradient background accent -->
+<div class="absolute inset-0 gold-gradient opacity-10 pointer-events-none"></div>
+<div class="absolute top-0 left-1/2 -translate-x-1/2 bg-[#D4AF37] text-surface-container-lowest font-label-caps text-label-caps px-6 py-1 rounded-b-lg font-bold w-max text-center shadow-md truncate">
+                        MAIS VENDIDO
+                    </div>
+<div class="text-center mt-6 mb-2">
+<span class="material-symbols-outlined text-[#D4AF37] text-[40px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface uppercase mb-2 text-center text-[#D4AF37]">Anual</h3>
+<div class="flex flex-row items-baseline justify-center gap-1 mb-2 text-center">
+<span class="font-body-lg text-[18px] text-on-surface-variant">R$</span>
+<span class="font-price-lg text-[56px] md:text-[72px] text-on-surface leading-none text-transparent bg-clip-text gold-gradient">299<span class="text-[24px] md:text-[40px]">,90</span></span>
+</div>
+<div class="text-center font-label-caps text-[#D4AF37] text-[12px] mb-6 tracking-widest uppercase">À Vista</div>
+<div class="bg-surface-container-highest/50 rounded-lg p-3 text-center mb-6 border border-[#D4AF37]/30">
+<span class="font-body-lg text-on-surface font-bold">Menos de R$ 0,83 por dia!</span>
+</div>
+<ul class="space-y-4 mb-8 flex-grow">
+<li class="flex items-center gap-3 text-on-surface text-[16px] leading-tight">
+<span class="material-symbols-outlined text-[#D4AF37] text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">star</span>
+                            Todos os benefícios mensais
+                        </li>
+<li class="flex items-center gap-3 text-on-surface text-[16px] leading-tight">
+<span class="material-symbols-outlined text-[#D4AF37] text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">star</span>
+                            Maior estabilidade garantida
+                        </li>
+<li class="flex items-center gap-3 text-on-surface text-[16px] leading-tight">
+<span class="material-symbols-outlined text-[#D4AF37] text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">star</span>
+                            Suporte VIP Prioritário
+                        </li>
+</ul>
+<button class="w-full text-surface-container-lowest font-headline-lg text-[20px] md:text-[24px] uppercase py-4 rounded-DEFAULT transition-transform hover:scale-105 gold-gradient font-bold shadow-lg shadow-[#D4AF37]/30" onclick="openTriageModal('Plano Anual')">
+                        ASSINAR ANUAL
+                    </button>
+</div>
+<!-- Semi-Annual Plan -->
+<div class="w-[85vw] md:w-auto shrink-0 snap-center glass-panel rounded-xl p-8 border-t-4 border-secondary flex flex-col h-full relative overflow-hidden">
+<div class="absolute top-4 right-4 bg-secondary/20 text-secondary font-label-caps text-label-caps px-3 py-1 rounded-full shadow-sm">
+                        Economia Real
+                    </div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface uppercase mb-2 mt-4 text-left">Semestral</h3>
+<div class="flex flex-row items-baseline gap-1 mb-2 text-left">
+<span class="font-body-lg text-[18px] text-on-surface-variant">R$</span>
+<span class="font-price-lg text-[48px] md:text-[56px] text-secondary leading-none">169<span class="text-[20px] md:text-[32px]">,90</span></span>
+</div>
+<div class="text-left font-label-caps text-on-surface-variant text-[12px] mb-6 tracking-widest uppercase">À Vista</div>
+<ul class="space-y-4 mb-8 flex-grow">
+<li class="flex items-center gap-3 text-on-surface-variant text-[16px] leading-tight">
+<span class="material-symbols-outlined text-secondary text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Desconto aplicado
+                        </li>
+<li class="flex items-center gap-3 text-on-surface-variant text-[16px] leading-tight">
+<span class="material-symbols-outlined text-secondary text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Acesso completo
+                        </li>
+<li class="flex items-center gap-3 text-on-surface-variant text-[16px] leading-tight">
+<span class="material-symbols-outlined text-secondary text-[24px] shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            2 Telas simultâneas
+                        </li>
+</ul>
+<button class="w-full bg-surface-container-high text-on-surface font-headline-lg text-[20px] uppercase py-3 rounded-DEFAULT hover:bg-secondary hover:text-on-secondary transition-colors border border-outline-variant" onclick="openTriageModal('Plano Semestral')">
+                        Assinar Semestral
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof Section -->
+<section class="py-20 px-margin-mobile md:px-margin-desktop bg-surface-container-low">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-12">
+<h2 class="font-headline-xl text-headline-xl text-on-background uppercase">Quem assina, aprova!</h2>
+<div class="flex justify-center gap-1 mt-4 text-[#D4AF37]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Testimonial 1 -->
+<div class="glass-panel p-8 rounded-xl relative">
+<div class="absolute top-0 right-8 -translate-y-1/2 text-[80px] text-primary/20 font-serif leading-none">"</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-full bg-surface-variant overflow-hidden border-2 border-outline-variant">
+<img alt="Carlos Souza" class="w-full h-full object-cover" data-alt="A portrait of a smiling middle-aged man with dark hair and a light beard. He is wearing a casual shirt. The background is a slightly blurred modern interior. The lighting is warm and natural, suggesting a friendly and approachable persona, fitting for a satisfied customer testimonial." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo_7vYmuaPf8-2aJTBfM5jiMb4_XvfwCE9H3K6mtdEfqshehqIwDznKTmn-Rgx_2uhFPncWcs2Sh--fhgasm-E-h18lVPi-XjLjBgd0VMV43hdnr3CehhdPGihIy_mVddg7HVa0Zjj2bXJTn1djoAopd9HKvYX9ZlxZe6zF93938yKqEQG1yqY7Uud1Rkfw1Un507jkGRMCCfvkzxZ-7crfGwFefJ5nkey30NwmnFg3a-OhLZ7RZyUrdfHlfrh1NUbQDt-_rAKwzH8"/>
+</div>
+<div>
+<h4 class="font-headline-lg text-[20px] text-on-surface uppercase">Carlos Souza</h4>
+<span class="font-label-caps text-on-surface-variant bg-surface-container-high px-2 py-1 rounded">Cliente há 8 meses</span>
+</div>
+</div>
+<p class="font-body-lg text-on-surface italic">"O suporte é excelente, me ajudaram a configurar na minha TV Box em menos de 5 minutos. Sem travamentos!"</p>
+</div>
+<!-- Testimonial 2 -->
+<div class="glass-panel p-8 rounded-xl relative">
+<div class="absolute top-0 right-8 -translate-y-1/2 text-[80px] text-primary/20 font-serif leading-none">"</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-full bg-surface-variant overflow-hidden border-2 border-outline-variant">
+<img alt="Mariana Costa" class="w-full h-full object-cover" data-alt="A portrait of a young woman with long dark hair, smiling warmly. She is wearing a professional blouse. The lighting is soft and flattering, creating a trustworthy and positive atmosphere. The background is a subtle, neutral tone, emphasizing her expression of satisfaction as a happy customer." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQsDmF-CvrEfdaiY1QJtyG5L6si8pqiQaaORqp71JAC9It868gQrEQ2ZGQ9_IPD5QfGIkqeMh4s-a_JvO1B0Po9TX0eTiwEuyHM1QqPxJlUHYraKU2RxT-dUqGCld2OimulPwgkUwjFfqxxnwJGbrfe2q1LHsKvaWE1u7NVNyNcsSlXICFAGZ61Xe0EnRd160NEF6hVcOaRgY80WBGGU7cUBWeE7P4YP59zdKweVW9srqBMNm6osDRx1j1h54AJ860atAAMBOow3r0"/>
+</div>
+<div>
+<h4 class="font-headline-lg text-[20px] text-on-surface uppercase">Mariana Costa</h4>
+<span class="font-label-caps text-[#D4AF37] bg-surface-container-high px-2 py-1 rounded border border-[#D4AF37]/30">Cliente há 1 ano</span>
+</div>
+</div>
+<p class="font-body-lg text-on-surface italic">"Consigo assistir minhas novelas e colocar os desenhos para as crianças ao mesmo tempo em telas diferentes. Nota 10."</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-20 px-margin-mobile md:px-margin-desktop" id="suporte">
+<div class="max-w-3xl mx-auto">
+<h2 class="font-headline-xl text-headline-xl text-on-background uppercase text-center mb-12 flex items-center justify-center gap-4">
+<span class="material-symbols-outlined text-primary text-[40px]" style="font-variation-settings: 'FILL' 1;">help</span>
+                Dúvidas Frequentes
+            </h2>
+<div class="space-y-4">
+<!-- FAQ Item 1 -->
+<div class="glass-panel p-6 rounded-lg border-l-4 border-primary">
+<h4 class="font-headline-lg text-[22px] text-on-surface uppercase mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 0;">satellite_alt</span>
+                        1. Preciso de antena ou cabos?
+                    </h4>
+<p class="font-body-md text-on-surface-variant pl-8">Não! O serviço funciona 100% via internet. Basta ter uma conexão estável e o aplicativo instalado.</p>
+</div>
+<!-- FAQ Item 2 -->
+<div class="glass-panel p-6 rounded-lg border-l-4 border-tertiary">
+<h4 class="font-headline-lg text-[22px] text-on-surface uppercase mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 0;">schedule</span>
+                        2. Como funciona o teste grátis de 6 horas?
+                    </h4>
+<p class="font-body-md text-on-surface-variant pl-8">Você entra em contato pelo nosso WhatsApp, recebe um código de acesso e pode testar toda a nossa grade sem pagar nada por 6 horas.</p>
+</div>
+<!-- FAQ Item 3 -->
+<div class="glass-panel p-6 rounded-lg border-l-4 border-secondary">
+<h4 class="font-headline-lg text-[22px] text-on-surface uppercase mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 0;">contract</span>
+                        3. Tem fidelidade ou contrato?
+                    </h4>
+<p class="font-body-md text-on-surface-variant pl-8">Nenhum! O plano é mensal e você pode cancelar quando quiser, sem multas ou burocracia.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Massive CTA Section -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-surface-container-high to-background border-t border-outline-variant/30 text-center relative overflow-hidden">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0wIDEwaDQwTTAgMjBoNDBNMCAzMGg0ME0xMCAwdjQwTTIwIDB2NDBNMzAgMHY0MCIgc3Ryb2tlPSIjNWYzZTNlIiBzdHJva2Utb3BhY2l0eT0iMC4xIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,white,transparent)] z-0"></div>
+<div class="relative z-10 max-w-4xl mx-auto">
+<h2 class="font-headline-xl text-[40px] md:text-[72px] text-on-surface uppercase mb-8 leading-tight">
+                Pronto para a <br/><span class="text-secondary-container">Melhor Experiência?</span>
+</h2>
+<a class="inline-flex items-center justify-center gap-4 bg-secondary-fixed-dim text-on-secondary-fixed font-headline-lg text-[20px] md:text-[40px] uppercase px-8 md:px-12 py-6 rounded-full neon-glow-green hover:scale-105 active:scale-95 transition-all duration-300 w-full md:w-auto" href="#" onclick="event.preventDefault(); openTriageModal('CTA Final - Quero Teste Grátis')">
+<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 md:w-12 md:h-12 fill-current" viewBox="0 0 24 24">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+</svg>
+                TESTE GRÁTIS AGORA
+            </a>
+<p class="font-body-lg text-secondary mt-6">Clique e fale direto conosco pelo WhatsApp</p>
+</div>
+</section>
+<!-- Footer (Shared Component Mapping) -->
+<footer class="bg-surface-dim full-width border-t border-outline-variant/20 flat">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-8 gap-gutter max-w-container-max mx-auto">
+<div class="font-headline-lg text-headline-lg text-primary">
+                MEU STREAM
+            </div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100 cursor-pointer" onclick="openInfoModal('Termos de Uso')">Termos de Uso</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100 cursor-pointer" onclick="openInfoModal('Privacidade')">Privacidade</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100 cursor-pointer" onclick="openInfoModal('Ajuda')">Ajuda</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100 cursor-pointer" onclick="openInfoModal('FAQ')">FAQ</a>
+<a class="font-label-caps text-label-caps text-tertiary font-bold hover:text-tertiary-fixed transition-colors cursor-pointer" onclick="openFeedbackModal()">Pedidos/Bugs</a>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant text-center md:text-right">
+                © 2026 MEU STREAM - Entretenimento Premium Ilimitado.
+            </div>
+</div>
+</footer>
+<!-- Triage Modal -->
+<div id="triage-modal" class="fixed inset-0 z-[100] flex items-end md:items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-background/80 backdrop-blur-sm" onclick="closeTriageModal()"></div>
+    <div id="triage-modal-content" class="bg-surface-container-highest relative w-full md:max-w-lg mx-0 md:mx-auto max-h-[90vh] overflow-y-auto rounded-t-3xl md:rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] md:shadow-2xl border-t-[6px] md:border-t-4 border-secondary transform translate-y-full md:translate-y-0 md:scale-95 transition-transform duration-300 z-10 pb-12 md:pb-8">
+        
+        <button onclick="closeTriageModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-bright">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+
+        <div>
+            <h3 class="font-headline-lg text-[24px] text-primary uppercase leading-tight mb-2">Quase lá!</h3>
+            <p class="font-body-md text-on-surface-variant">Responda rapidinho para liberarmos o seu acesso da melhor forma.</p>
+        </div>
+
+        <form id="triage-form" class="flex flex-col gap-6">
+            <input type="hidden" id="triage-origin" name="origin" value="">
+
+            <!-- Q1 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">1. Onde você vai usar o aplicativo?</label>
+                <select id="q1-device" name="device" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
+                    <option value="" disabled selected>Selecione uma opção...</option>
+                    <option value="Smart TV Samsung">Smart TV Samsung</option>
+                    <option value="Smart TV LG">Smart TV LG</option>
+                    <option value="Android TV">Android TV</option>
+                    <option value="TV Box">TV Box</option>
+                    <option value="Fire TV Stick">Fire TV Stick</option>
+                    <option value="Celular Android">Celular Android</option>
+                    <option value="iPhone">iPhone</option>
+                    <option value="Computador">Computador</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+
+            <!-- Q2 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">2. Quantas telas precisa usar ao mesmo tempo?</label>
+                <div class="flex flex-col gap-2">
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="screens" value="1 tela" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50" required>
+                        <span class="text-on-surface">1 tela</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="screens" value="2 telas" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50">
+                        <span class="text-on-surface">2 telas</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="screens" value="3 telas ou mais" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50">
+                        <span class="text-on-surface">3 telas ou mais</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">3. Sua internet é de quantos Mbps?</label>
+                <select id="q3-internet" name="internet" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
+                    <option value="" disabled selected>Selecione uma opção...</option>
+                    <option value="Menos de 30 Mbps">Menos de 30 Mbps</option>
+                    <option value="30 a 100 Mbps">30 a 100 Mbps</option>
+                    <option value="Acima de 100 Mbps">Acima de 100 Mbps</option>
+                    <option value="Não sei informar">Não sei informar</option>
+                </select>
+            </div>
+
+            <!-- Q4 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">4. Já utiliza algum serviço parecido?</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex items-center justify-center gap-2 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="uses_similar" value="Sim" class="text-secondary focus:ring-secondary w-4 h-4 bg-transparent border-outline-variant/50" required>
+                        <span class="text-on-surface">Sim</span>
+                    </label>
+                    <label class="flex items-center justify-center gap-2 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="uses_similar" value="Não" class="text-secondary focus:ring-secondary w-4 h-4 bg-transparent border-outline-variant/50">
+                        <span class="text-on-surface">Não</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">5. Precisa de ajuda na instalação?</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex items-center justify-center gap-2 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="needs_help" value="Sim" class="text-secondary focus:ring-secondary w-4 h-4 bg-transparent border-outline-variant/50" required>
+                        <span class="text-on-surface">Sim</span>
+                    </label>
+                    <label class="flex items-center justify-center gap-2 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="needs_help" value="Não" class="text-secondary focus:ring-secondary w-4 h-4 bg-transparent border-outline-variant/50">
+                        <span class="text-on-surface">Não</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">6. Qual sua cidade e estado?</label>
+                <input type="text" id="q6-location" name="location" placeholder="Ex: São Paulo - SP" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full placeholder:text-on-surface-variant/50" required>
+            </div>
+
+            <!-- Q7 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">7. Como conheceu nosso serviço?</label>
+                <select id="q7-source" name="source" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
+                    <option value="" disabled selected>Selecione uma opção...</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Google">Google</option>
+                    <option value="Indicação">Indicação</option>
+                    <option value="Grupo WhatsApp">Grupo WhatsApp</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+
+            <hr class="border-outline-variant/20 my-2">
+
+            <!-- Q8 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">8. O que você procura mais?</label>
+                <select id="q8-preference" name="preference" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
+                    <option value="" disabled selected>Selecione uma opção...</option>
+                    <option value="Filmes e séries">Filmes e séries</option>
+                    <option value="Canais ao vivo">Canais ao vivo</option>
+                    <option value="Futebol e esportes">Futebol e esportes</option>
+                    <option value="Conteúdo infantil">Conteúdo infantil</option>
+                    <option value="Tudo junto">Tudo junto!</option>
+                </select>
+            </div>
+
+            <!-- Q9 -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">9. Pretende assinar hoje caso goste do teste?</label>
+                <div class="flex flex-col gap-2">
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="intent" value="Sim" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50" required>
+                        <span class="text-on-surface">Sim</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                        <input type="radio" name="intent" value="Ainda estou pesquisando" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50">
+                        <span class="text-on-surface">Ainda estou pesquisando</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-4 mt-2 rounded-xl neon-glow hover:scale-[1.02] active:scale-95 transition-all w-full flex justify-center items-center gap-2">
+                <span class="material-symbols-outlined">send</span>
+                ENVIAR PARA O WHATSAPP
+            </button>
+        </form>
+    </div>
+</div>
+<!-- Info Modal (Footer Links) -->
+<div id="info-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-background/80 backdrop-blur-sm" onclick="closeInfoModal()"></div>
+    <div id="info-modal-content" class="glass-panel relative w-full max-w-md mx-margin-mobile md:mx-auto max-h-[80vh] overflow-y-auto rounded-2xl p-6 md:p-8 flex flex-col gap-4 shadow-2xl border-t-4 border-primary transform scale-95 transition-transform duration-300 z-10 text-center">
+        <button onclick="closeInfoModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-bright">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <svg xmlns="http://www.w3.org/2000/svg" class="text-primary w-12 h-12 mx-auto mt-2 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <h3 id="info-modal-title" class="font-headline-lg text-[24px] text-on-surface uppercase leading-tight">Título</h3>
+        <div id="info-modal-text" class="font-body-md text-on-surface-variant mb-4 text-left space-y-3"></div>
+        <button onclick="closeInfoModal()" class="bg-surface-container-high text-on-surface font-label-caps text-label-caps px-6 py-3 rounded-xl hover:bg-primary hover:text-on-primary transition-colors w-full">
+            FECHAR
+        </button>
+    </div>
+</div>
+<!-- Details Modal -->
+<div id="details-modal" class="fixed inset-0 z-[110] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeDetailsModal()"></div>
+    <div id="details-modal-content" class="relative w-full max-w-4xl mx-4 md:mx-auto bg-surface-container-low rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 z-10 border border-outline-variant/30 flex flex-col md:flex-row max-h-[90vh]">
+        
+        <button onclick="closeDetailsModal()" class="absolute top-4 right-4 text-white hover:text-secondary transition-colors p-2 rounded-full bg-black/50 hover:bg-white/10 z-20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+
+        <!-- Left: Poster -->
+        <div class="w-full md:w-[40%] h-[250px] md:h-[600px] shrink-0 relative">
+            <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-surface-container-low to-transparent z-10 pointer-events-none"></div>
+            <img id="details-poster" src="" alt="Poster" class="w-full h-full object-cover md:object-[center_20%]">
+        </div>
+        
+        <!-- Right: Info -->
+        <div class="w-full md:w-[60%] p-6 md:p-10 flex flex-col overflow-y-auto relative z-20 -mt-16 md:mt-0">
+            <h2 id="details-title" class="font-headline-lg text-[28px] md:text-[40px] text-white uppercase leading-tight mb-3 drop-shadow-lg"></h2>
+            
+            <div class="flex flex-wrap gap-4 items-center text-sm font-label-caps text-secondary mb-6">
+                <span class="flex items-center gap-1 bg-surface-bright/80 backdrop-blur rounded px-2 py-1 border border-outline-variant/30">
+                    <svg class="w-4 h-4 fill-current text-tertiary" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> 
+                    <span id="details-rating" class="text-white"></span>
+                </span>
+                <span id="details-date" class="border border-secondary/30 px-2 py-1 rounded text-on-surface-variant bg-surface-bright/80 backdrop-blur"></span>
+                <span id="details-type" class="bg-secondary/20 text-secondary px-2 py-1 rounded"></span>
+            </div>
+
+            <h3 class="text-white font-bold mb-2">Sinopse</h3>
+            <p id="details-overview" class="font-body-md text-on-surface-variant leading-relaxed mb-8">
+                <!-- Sinopse -->
+            </p>
+
+            <button onclick="closeDetailsModal(); document.querySelector('a[href=\'#planos\']').click()" class="bg-primary text-on-primary font-label-caps text-label-caps px-8 py-4 mt-auto rounded-xl neon-glow hover:scale-[1.02] active:scale-95 transition-transform w-full md:w-auto self-start">
+                ASSINAR PARA ASSISTIR
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Feedback Modal -->
+<div id="feedback-modal" class="fixed inset-0 z-[100] flex items-end md:items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-background/80 backdrop-blur-sm" onclick="closeFeedbackModal()"></div>
+    <div id="feedback-modal-content" class="bg-surface-container-highest relative w-full md:max-w-lg mx-0 md:mx-auto max-h-[90vh] overflow-y-auto rounded-t-3xl md:rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] md:shadow-2xl border-t-[6px] md:border-t-4 border-tertiary transform translate-y-full md:translate-y-0 md:scale-95 transition-transform duration-300 z-10 pb-12 md:pb-8">
+        
+        <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-bright">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+
+        <div>
+            <h3 class="font-headline-lg text-[24px] text-tertiary uppercase leading-tight mb-2">Solicitações & Feedback</h3>
+            <p class="font-body-md text-on-surface-variant">Quer pedir um filme/série ou encontrou algum problema? Fale com a gente!</p>
+        </div>
+
+        <form id="feedback-form" class="flex flex-col gap-6">
+            <!-- Tipo -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">1. O que você deseja fazer?</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex flex-col items-center justify-center gap-2 p-4 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-tertiary has-[:checked]:bg-tertiary/10 has-[:checked]:text-tertiary text-on-surface-variant text-center">
+                        <input type="radio" name="type" value="Solicitação de Conteúdo" class="hidden" required>
+                        <span class="material-symbols-outlined text-[32px] text-inherit">movie</span>
+                        <span class="text-on-surface text-[14px]">Pedir Conteúdo</span>
+                    </label>
+                    <label class="flex flex-col items-center justify-center gap-2 p-4 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-error has-[:checked]:bg-error/10 has-[:checked]:text-error text-on-surface-variant text-center">
+                        <input type="radio" name="type" value="Reportar Bug" class="hidden">
+                        <span class="material-symbols-outlined text-[32px] text-inherit">bug_report</span>
+                        <span class="text-on-surface text-[14px]">Reportar Erro</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Título -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">2. Título ou Resumo do Erro</label>
+                <input type="text" name="title" placeholder="Ex: A Casa do Dragão S02E01" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none transition-colors w-full placeholder:text-on-surface-variant/50" required>
+            </div>
+
+            <!-- Descrição -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">3. Descrição</label>
+                <textarea name="description" rows="3" placeholder="Detalhes do seu pedido ou o que aconteceu no erro..." class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none transition-colors w-full placeholder:text-on-surface-variant/50" required></textarea>
+            </div>
+
+            <button type="submit" class="bg-tertiary text-on-tertiary font-label-caps text-label-caps px-6 py-4 mt-2 rounded-xl hover:scale-[1.02] active:scale-95 transition-all w-full flex justify-center items-center gap-2 shadow-lg shadow-tertiary/20">
+                <span class="material-symbols-outlined">send</span>
+                ENVIAR MENSAGEM
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body></html>

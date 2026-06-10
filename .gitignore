@@ -1,0 +1,6 @@
+node_modules/
+.env
+.DS_Store
+.puppeteer
+.wwebjs_auth
+.wwebjs_cache
