@@ -195,9 +195,13 @@ function closeDetailsModal() {
     }, 300);
 }
 
-// Initialize TMDB content
+// Initialize TMDB content and wake up backend
 document.addEventListener('DOMContentLoaded', () => {
     fetchTrendingContent();
+    
+    // Acorda o backend do Render de forma invisível
+    const backendUrl = "https://meustreaming-backend.onrender.com";
+    fetch(backendUrl).catch(() => {}); // Ignora erros, o importante é o ping bater lá
 });
 // Handle form submission
 document.getElementById('triage-form').addEventListener('submit', function(e) {
