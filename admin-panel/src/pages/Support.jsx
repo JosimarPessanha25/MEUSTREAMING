@@ -93,7 +93,15 @@ export default function Support() {
 
   function getWhatsAppLink(phone, title, desc) {
     const cleanNumber = phone.replace('@c.us', '').replace('@lid', '')
-    const message = `Olá! Sou do suporte técnico do Meu Stream. 🛠️ Recebi seu chamado sobre *"${title}"* (_${desc}_). Como posso te ajudar a resolver isso agora?`
+    
+    // Busca do localStorage ou usa o padrão de fallback
+    const template = localStorage.getItem('template_support') || 'Olá! Sou do suporte técnico do Meu Stream. 🛠️ Recebi seu chamado sobre *"{title}"* (_{desc}_). Como posso te ajudar a resolver isso agora?';
+    
+    // Substitui as tags dinamicamente
+    const message = template
+      .replace(/{title}/g, title)
+      .replace(/{desc}/g, desc);
+      
     return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
   }
 

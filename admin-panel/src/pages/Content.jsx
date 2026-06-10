@@ -93,8 +93,11 @@ export default function Content() {
   function getWhatsAppLink(phone, title) {
     const cleanNumber = phone.replace('@c.us', '').replace('@lid', '')
     
-    // Mensagem amigável pré-definida em português
-    const message = `Olá! Sou a equipe do Meu Stream. 🍿 Vim te dar uma boa notícia! O filme/série *"${title}"* que você pediu para adicionar ao catálogo já está disponível! Já pode preparar a pipoca e aproveitar! 🎬`
+    // Busca do localStorage ou usa o padrão de fallback
+    const template = localStorage.getItem('template_content') || 'Olá! Sou a equipe do Meu Stream. 🍿 Vim te dar uma boa notícia! O filme/série *"{title}"* que você pediu para adicionar ao catálogo já está disponível! Já pode preparar a pipoca e aproveitar! 🎬';
+    
+    // Substitui a tag dinamicamente
+    const message = template.replace(/{title}/g, title);
     
     return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
   }

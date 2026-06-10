@@ -1,11 +1,12 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, Users, Film, Wrench, Smartphone, Settings as SettingsIcon } from 'lucide-react'
+import { LayoutDashboard, Users, Film, Wrench, Smartphone, Settings as SettingsIcon, MessageSquare } from 'lucide-react'
 import Dashboard from './pages/Dashboard'
 import Leads from './pages/Leads'
 import Content from './pages/Content'
 import Support from './pages/Support'
 import WhatsAppAuth from './pages/WhatsAppAuth'
 import Settings from './pages/Settings'
+import Chat from './pages/Chat'
 
 function App() {
   const location = useLocation()
@@ -25,6 +26,11 @@ function App() {
           <Link to="/whatsapp" className={`nav-item ${location.pathname === '/whatsapp' ? 'active' : ''}`}>
             <Smartphone size={20} />
             <span>Conexão WhatsApp</span>
+          </Link>
+
+          <Link to="/chat" className={`nav-item ${location.pathname === '/chat' ? 'active' : ''}`}>
+            <MessageSquare size={20} />
+            <span>Chat ao Vivo</span>
           </Link>
           
           <div style={{ margin: '15px 0', borderBottom: '1px solid var(--glass-border)' }}></div>
@@ -58,6 +64,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/whatsapp" element={<WhatsAppAuth />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="/leads" element={<Leads />} />
           <Route path="/content" element={<Content />} />
           <Route path="/support" element={<Support />} />

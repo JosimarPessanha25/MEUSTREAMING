@@ -11,10 +11,27 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 // Servir a Landing Page (Site)
 const path = require('path');
 app.use(express.static(path.join(__dirname, '../Site')));
+
+// Rota de API para enviar mensagens diretamente do Painel
+app.post('/api/send-message', async (req, res) => {
+    const { to, message } = req.body;
+    if (!to || !message) {
+        return res.status(400).json({ error: 'Os campos "to" e "message" são necessários.' });
+    }
+    try {
+        // Formatar o número do destinatário
+        const formattedTo = to.includes('@c.us') || to.includes('@lid') ? to : `${to}@c.us`;
+        await client.sendMessage(formattedTo, message);
+        res.json({ success: true, message: 'Mensagem enviada!' });
+    } catch (err) {
+        res.status(500).json({ error: err.message || 'Erro ao enviar mensagem.' });
+    }
+});
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -98,6 +115,28 @@ client.on('message', async (msg) => {
         await handleMessage(client, msg);
     } catch (error) {
         console.error('Erro ao processar mensagem:', error);
+    }
+});
+
+// Repassa TODAS as mensagens de texto em tempo real para a interface de Chat ao Vivo
+client.on('message_create', async (msg) => {
+    try {
+        // Ignora status ou grupos
+        const chat = await msg.getChat();
+        if (msg.isStatus || chat.isGroup) {
+            return;
+        }
+
+        io.emit('whatsapp_message', {
+            id: msg.id.id,
+            from: msg.from,
+            to: msg.to,
+            body: msg.body,
+            timestamp: msg.timestamp,
+            fromMe: msg.fromMe
+        });
+    } catch (err) {
+        // Silencioso se der erro ao analisar chat
     }
 });
 

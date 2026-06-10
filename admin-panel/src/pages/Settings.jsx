@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Trash2, UserPlus, Eye, EyeOff, ShieldAlert, Key, Globe, Cpu } from 'lucide-react';
+import { Trash2, UserPlus, Eye, EyeOff, ShieldAlert, Key, Globe, Cpu, MessageSquare } from 'lucide-react';
 
 export default function Settings() {
   const [blacklist, setBlacklist] = useState([]);
@@ -13,9 +13,15 @@ export default function Settings() {
   const [supabaseUrl, setSupabaseUrl] = useState('');
   const [supabaseAnonKey, setSupabaseAnonKey] = useState('');
 
+  // Estados dos templates de mensagem
+  const [templateLead, setTemplateLead] = useState('');
+  const [templateSupport, setTemplateSupport] = useState('');
+  const [templateContent, setTemplateContent] = useState('');
+
   useEffect(() => {
     fetchBlacklist();
     loadCredentials();
+    loadTemplates();
   }, []);
 
   async function fetchBlacklist() {
@@ -41,16 +47,38 @@ export default function Settings() {
   }
 
   function loadCredentials() {
-    // Carregar as chaves do environment do Vite
     setSupabaseUrl(import.meta.env.VITE_SUPABASE_URL || 'Não configurado');
     setSupabaseAnonKey(import.meta.env.VITE_SUPABASE_ANON_KEY || 'Não configurado');
+  }
+
+  function loadTemplates() {
+    // Carregar templates do localStorage (ou usar o valor padrão caso não existam)
+    setTemplateLead(localStorage.getItem('template_lead') || 'Olá! Sou o atendimento do Meu Stream. 🎬 Vi que você solicitou um teste grátis no site para o dispositivo *{device}*! Como posso te ajudar a liberar o seu acesso agora?');
+    setTemplateSupport(localStorage.getItem('template_support') || 'Olá! Sou do suporte técnico do Meu Stream. 🛠️ Recebi seu chamado sobre *"{title}"* (_{desc}_). Como posso te ajudar a resolver isso agora?');
+    setTemplateContent(localStorage.getItem('template_content') || 'Olá! Sou a equipe do Meu Stream. 🍿 Vim te dar uma boa notícia! O filme/série *"{title}"* que você pediu para adicionar ao catálogo já está disponível! Já pode preparar a pipoca e aproveitar! 🎬');
+  }
+
+  function handleSaveTemplates(e) {
+    e.preventDefault();
+    localStorage.setItem('template_lead', templateLead);
+    localStorage.setItem('template_support', templateSupport);
+    localStorage.setItem('template_content', templateContent);
+    alert('✅ Modelos de mensagens salvos com sucesso!');
+  }
+
+  function handleResetTemplates() {
+    if (!window.confirm('Tem certeza que deseja restaurar as mensagens originais de fábrica?')) return;
+    
+    localStorage.removeItem('template_lead');
+    localStorage.removeItem('template_support');
+    localStorage.removeItem('template_content');
+    loadTemplates();
   }
 
   async function handleAdd(e) {
     e.preventDefault();
     if (!newNumber) return;
 
-    // Remove caracteres não numéricos do telefone
     const cleanNumber = newNumber.replace(/\D/g, '');
 
     try {
@@ -90,13 +118,13 @@ export default function Settings() {
       <div style={{ marginBottom: '35px' }}>
         <h1 style={{ margin: 0 }}>Configurações do Robô</h1>
         <p style={{ color: 'var(--text-secondary)', margin: '5px 0 0 0' }}>
-          Gerencie a lista negra de contatos e visualize os parâmetros do seu sistema.
+          Gerencie a lista negra de contatos, configure modelos de mensagens e visualize os parâmetros do seu sistema.
         </p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.8fr', gap: '30px', alignItems: 'start', marginBottom: '40px' }}>
         
-        {/* Coluna Esquerda: Adicionar + Credenciais */}
+        {/* Coluna Esquerda: Formulários */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           
           {/* Card Adicionar Bloqueado */}
@@ -105,9 +133,6 @@ export default function Settings() {
               <UserPlus size={20} style={{ color: 'var(--primary)' }} />
               Bloquear Contato
             </h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '20px', lineHeight: '1.4' }}>
-              Contatos nesta lista serão ignorados automaticamente pela IA do robô.
-            </p>
             
             <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div>
@@ -180,62 +205,164 @@ export default function Settings() {
 
         </div>
 
-        {/* Coluna Direita: Lista de Bloqueados */}
-        <div className="glass-panel" style={{ padding: '30px', minHeight: '400px' }}>
-          <h3 style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            Lista Negra ({blacklist.length})
-          </h3>
+        {/* Coluna Direita: Templates de Mensagens & Blacklist */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+          
+          {/* Card Modelos de Mensagens */}
+          <div className="glass-panel" style={{ padding: '30px' }}>
+            <h3 style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <MessageSquare size={20} style={{ color: 'var(--primary)' }} />
+              Modelos de Mensagens (WhatsApp)
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '20px', lineHeight: '1.4' }}>
+              Customize as mensagens pré-definidas que você envia ao clicar em atender/notificar nas tabelas. Use tags dinâmicas como <code>{`{device}`}</code>, <code>{`{title}`}</code> e <code>{`{desc}`}</code>.
+            </p>
 
-          {loading ? (
-            <p style={{ color: 'var(--text-secondary)' }}>Carregando números...</p>
-          ) : blacklist.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-              Nenhum número na lista negra. O robô está respondendo a todos normalmente.
-            </div>
-          ) : (
-            <div className="table-container" style={{ border: 'none', margin: 0 }}>
-              <table className="data-table" style={{ background: 'transparent' }}>
-                <thead>
-                  <tr style={{ background: 'transparent' }}>
-                    <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)' }}>Nome</th>
-                    <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)' }}>Telefone</th>
-                    <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)', textAlign: 'right' }}>Ação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {blacklist.map((item) => (
-                    <tr key={item.id}>
-                      <td style={{ padding: '15px 12px', fontWeight: '600' }}>
-                        {item.name || <span style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontWeight: 'normal' }}>Sem nome</span>}
-                      </td>
-                      <td style={{ padding: '15px 12px', fontFamily: 'monospace' }}>
-                        {item.phone_number}
-                      </td>
-                      <td style={{ padding: '15px 12px', textAlign: 'right' }}>
-                        <button 
-                          onClick={() => handleRemove(item.id)}
-                          className="btn-danger"
-                          style={{
-                            background: 'rgba(239, 68, 68, 0.1)',
-                            color: 'var(--danger)',
-                            border: '1px solid rgba(239, 68, 68, 0.2)',
-                            padding: '6px 12px',
-                            borderRadius: '8px',
-                            fontSize: '0.8rem',
-                            boxShadow: 'none',
-                            gap: '4px'
-                          }}
-                        >
-                          <Trash2 size={12} />
-                          Desbloquear
-                        </button>
-                      </td>
+            <form onSubmit={handleSaveTemplates} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                  Boas-vindas ao Lead (Triagem)
+                </label>
+                <textarea 
+                  value={templateLead}
+                  onChange={(e) => setTemplateLead(e.target.value)}
+                  placeholder="Mensagem para novos leads..."
+                  rows={3}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(0,0,0,0.25)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontFamily: 'inherit',
+                    fontSize: '0.9rem',
+                    resize: 'vertical',
+                    boxSizing: 'border-box'
+                  }}
+                />
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Tag disponível: <code>{`{device}`}</code></span>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                  Atendimento de Suporte Técnico
+                </label>
+                <textarea 
+                  value={templateSupport}
+                  onChange={(e) => setTemplateSupport(e.target.value)}
+                  placeholder="Mensagem para suporte..."
+                  rows={3}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(0,0,0,0.25)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontFamily: 'inherit',
+                    fontSize: '0.9rem',
+                    resize: 'vertical',
+                    boxSizing: 'border-box'
+                  }}
+                />
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Tags disponíveis: <code>{`{title}`}</code>, <code>{`{desc}`}</code></span>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                  Aviso de Filme Adicionado ao Catálogo
+                </label>
+                <textarea 
+                  value={templateContent}
+                  onChange={(e) => setTemplateContent(e.target.value)}
+                  placeholder="Mensagem para notificação de filme..."
+                  rows={3}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(0,0,0,0.25)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontFamily: 'inherit',
+                    fontSize: '0.9rem',
+                    resize: 'vertical',
+                    boxSizing: 'border-box'
+                  }}
+                />
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Tag disponível: <code>{`{title}`}</code></span>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                <button type="submit" style={{ flex: 1 }}>
+                  Salvar Mensagens
+                </button>
+                <button type="button" onClick={handleResetTemplates} className="btn-secondary">
+                  Restaurar Padrão
+                </button>
+              </div>
+            </form>
+          </div>
+          
+          {/* Card Lista Negra */}
+          <div className="glass-panel" style={{ padding: '30px', minHeight: '300px' }}>
+            <h3 style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              Lista Negra ({blacklist.length})
+            </h3>
+
+            {loading ? (
+              <p style={{ color: 'var(--text-secondary)' }}>Carregando números...</p>
+            ) : blacklist.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+                Nenhum número na lista negra. O robô está respondendo a todos normalmente.
+              </div>
+            ) : (
+              <div className="table-container" style={{ border: 'none', margin: 0 }}>
+                <table className="data-table" style={{ background: 'transparent' }}>
+                  <thead>
+                    <tr style={{ background: 'transparent' }}>
+                      <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)' }}>Nome</th>
+                      <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)' }}>Telefone</th>
+                      <th style={{ padding: '12px 15px', background: 'transparent', borderBottom: '1px solid var(--glass-border)', textAlign: 'right' }}>Ação</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody>
+                    {blacklist.map((item) => (
+                      <tr key={item.id}>
+                        <td style={{ padding: '15px 12px', fontWeight: '600' }}>
+                          {item.name || <span style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontWeight: 'normal' }}>Sem nome</span>}
+                        </td>
+                        <td style={{ padding: '15px 12px', fontFamily: 'monospace' }}>
+                          {item.phone_number}
+                        </td>
+                        <td style={{ padding: '15px 12px', textAlign: 'right' }}>
+                          <button 
+                            onClick={() => handleRemove(item.id)}
+                            className="btn-danger"
+                            style={{
+                              background: 'rgba(239, 68, 68, 0.1)',
+                              color: 'var(--danger)',
+                              border: '1px solid rgba(239, 68, 68, 0.2)',
+                              padding: '6px 12px',
+                              borderRadius: '8px',
+                              fontSize: '0.8rem',
+                              boxShadow: 'none',
+                              gap: '4px'
+                            }}
+                          >
+                            <Trash2 size={12} />
+                            Desbloquear
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
         </div>
 
       </div>

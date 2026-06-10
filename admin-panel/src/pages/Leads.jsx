@@ -96,8 +96,11 @@ export default function Leads() {
   function getWhatsAppLink(phone, device) {
     const cleanNumber = phone.replace('@c.us', '').replace('@lid', '')
     
-    // Mensagem amigável pré-definida em português
-    const message = `Olá! Sou o atendimento do Meu Stream. 🎬 Vi que você solicitou um teste grátis no site para o dispositivo *${device}*! Como posso te ajudar a liberar o seu acesso agora?`
+    // Busca do localStorage ou usa o padrão de fallback
+    const template = localStorage.getItem('template_lead') || 'Olá! Sou o atendimento do Meu Stream. 🎬 Vi que você solicitou um teste grátis no site para o dispositivo *{device}*! Como posso te ajudar a liberar o seu acesso agora?';
+    
+    // Substitui a tag dinamicamente
+    const message = template.replace(/{device}/g, device);
     
     return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
   }
