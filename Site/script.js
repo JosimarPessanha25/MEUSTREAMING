@@ -214,6 +214,7 @@ document.getElementById('triage-form').addEventListener('submit', function(e) {
     // Build WhatsApp Message
     let message = `Olá! Tenho interesse em assinar e acabei de preencher a triagem no site.\n\n`;
     message += `*Origem:* ${data.origin}\n`;
+    message += `*Nome:* ${data.name}\n`;
     message += `*Dispositivo:* ${data.device}\n`;
     message += `*Telas:* ${data.screens}\n`;
     message += `*Internet:* ${data.internet}\n`;
@@ -222,7 +223,7 @@ document.getElementById('triage-form').addEventListener('submit', function(e) {
     message += `*Cidade/Estado:* ${data.location}\n`;
     message += `*Como conheceu:* ${data.source}\n`;
     message += `*Procura mais:* ${data.preference}\n`;
-    message += `*Pretende assinar hoje:* ${data.intent}\n\n`;
+    message += `*Pretende assinar:* ${data.intent}\n\n`;
     message += `Como podemos prosseguir?`;
     
     // Encode for URL

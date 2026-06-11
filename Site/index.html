@@ -135,12 +135,7 @@ tailwind.config = {
 </div>
 </header>
 
-<!-- Sticky Mobile App CTA -->
-<div class="fixed bottom-4 left-4 right-4 z-[45] md:hidden">
-    <button class="w-full bg-secondary text-surface-container-lowest font-headline-lg text-[18px] uppercase py-4 rounded-xl shadow-2xl shadow-secondary/40 font-bold transition-transform active:scale-95" onclick="openTriageModal('Sticky Mobile App Bar')">
-        TESTE GRÁTIS AGORA
-    </button>
-</div>
+
 <!-- Hero Section -->
 <section id="hero-section" class="relative min-h-[100dvh] md:min-h-[819px] flex items-center justify-center pt-24 pb-16 px-margin-mobile md:px-margin-desktop overflow-hidden bg-background">
 <!-- Dynamic TMDB Background Images for Crossfade -->
@@ -485,51 +480,50 @@ tailwind.config = {
         <form id="triage-form" class="flex flex-col gap-6">
             <input type="hidden" id="triage-origin" name="origin" value="">
 
+            <!-- Nome -->
+            <div class="flex flex-col gap-2">
+                <label class="font-body-lg text-on-surface font-bold">Seu Nome completo</label>
+                <input type="text" id="triage-name" name="name" placeholder="Ex: Josimar Pessanha" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full placeholder:text-on-surface-variant/50" required>
+            </div>
+
             <!-- Q1 -->
             <div class="flex flex-col gap-2">
-                <label class="font-body-lg text-on-surface font-bold">1. Onde você vai usar o aplicativo?</label>
+                <label class="font-body-lg text-on-surface font-bold">1. Onde você vai usar?</label>
                 <select id="q1-device" name="device" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
-                    <option value="" disabled selected>Selecione uma opção...</option>
-                    <option value="Smart TV Samsung">Smart TV Samsung</option>
-                    <option value="Smart TV LG">Smart TV LG</option>
-                    <option value="Android TV">Android TV</option>
-                    <option value="TV Box">TV Box</option>
-                    <option value="Fire TV Stick">Fire TV Stick</option>
-                    <option value="Celular Android">Celular Android</option>
-                    <option value="iPhone">iPhone</option>
-                    <option value="Computador">Computador</option>
-                    <option value="Outro">Outro</option>
+                    <option value="" disabled selected>Selecione seu dispositivo...</option>
+                    <option value="Samsung TV">📺 Samsung TV</option>
+                    <option value="LG TV">📺 LG TV</option>
+                    <option value="Roku TV">📺 Roku TV</option>
+                    <option value="Android TV / Google TV">📺 Android TV / Google TV</option>
+                    <option value="TV Box Android">📦 TV Box Android</option>
+                    <option value="Fire TV Stick">🔥 Fire TV Stick</option>
+                    <option value="Celular Android">📱 Celular Android</option>
+                    <option value="iPhone / iPad">🍎 iPhone / iPad</option>
+                    <option value="Computador">💻 Computador</option>
                 </select>
             </div>
 
             <!-- Q2 -->
             <div class="flex flex-col gap-2">
                 <label class="font-body-lg text-on-surface font-bold">2. Quantas telas precisa usar ao mesmo tempo?</label>
-                <div class="flex flex-col gap-2">
-                    <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
-                        <input type="radio" name="screens" value="1 tela" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50" required>
-                        <span class="text-on-surface">1 tela</span>
-                    </label>
-                    <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
-                        <input type="radio" name="screens" value="2 telas" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50">
-                        <span class="text-on-surface">2 telas</span>
-                    </label>
-                    <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
-                        <input type="radio" name="screens" value="3 telas ou mais" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50">
-                        <span class="text-on-surface">3 telas ou mais</span>
-                    </label>
-                </div>
+                <select id="q2-screens" name="screens" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
+                    <option value="" disabled selected>Selecione a quantidade...</option>
+                    <option value="1 Tela">◉ 1 Tela</option>
+                    <option value="2 Telas">◉ 2 Telas</option>
+                    <option value="3 Telas ou mais">◉ 3 Telas ou mais</option>
+                </select>
             </div>
 
             <!-- Q3 -->
             <div class="flex flex-col gap-2">
                 <label class="font-body-lg text-on-surface font-bold">3. Sua internet é de quantos Mbps?</label>
                 <select id="q3-internet" name="internet" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
-                    <option value="" disabled selected>Selecione uma opção...</option>
-                    <option value="Menos de 30 Mbps">Menos de 30 Mbps</option>
-                    <option value="30 a 100 Mbps">30 a 100 Mbps</option>
-                    <option value="Acima de 100 Mbps">Acima de 100 Mbps</option>
-                    <option value="Não sei informar">Não sei informar</option>
+                    <option value="" disabled selected>Selecione a velocidade...</option>
+                    <option value="Até 50 Mbps">◉ Até 50 Mbps</option>
+                    <option value="50 a 100 Mbps">◉ 50 a 100 Mbps</option>
+                    <option value="100 a 300 Mbps">◉ 100 a 300 Mbps</option>
+                    <option value="Acima de 300 Mbps">◉ Acima de 300 Mbps</option>
+                    <option value="Não sei informar">◉ Não sei informar</option>
                 </select>
             </div>
 
@@ -565,8 +559,8 @@ tailwind.config = {
 
             <!-- Q6 -->
             <div class="flex flex-col gap-2">
-                <label class="font-body-lg text-on-surface font-bold">6. Qual sua cidade e estado?</label>
-                <input type="text" id="q6-location" name="location" placeholder="Ex: São Paulo - SP" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full placeholder:text-on-surface-variant/50" required>
+                <label class="font-body-lg text-on-surface font-bold">6. Cidade e Estado</label>
+                <input type="text" id="q6-location" name="location" placeholder="Ex: Vitória - ES" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full placeholder:text-on-surface-variant/50" required>
             </div>
 
             <!-- Q7 -->
@@ -574,33 +568,32 @@ tailwind.config = {
                 <label class="font-body-lg text-on-surface font-bold">7. Como conheceu nosso serviço?</label>
                 <select id="q7-source" name="source" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
                     <option value="" disabled selected>Selecione uma opção...</option>
-                    <option value="Facebook">Facebook</option>
-                    <option value="Instagram">Instagram</option>
-                    <option value="Google">Google</option>
-                    <option value="Indicação">Indicação</option>
-                    <option value="Grupo WhatsApp">Grupo WhatsApp</option>
-                    <option value="Outro">Outro</option>
+                    <option value="Google">◉ Google</option>
+                    <option value="Facebook">◉ Facebook</option>
+                    <option value="Instagram">◉ Instagram</option>
+                    <option value="Indicação">◉ Indicação</option>
+                    <option value="WhatsApp">◉ WhatsApp</option>
+                    <option value="Outro">◉ Outro</option>
                 </select>
             </div>
 
-            <hr class="border-outline-variant/20 my-2">
-
             <!-- Q8 -->
             <div class="flex flex-col gap-2">
-                <label class="font-body-lg text-on-surface font-bold">8. O que você procura mais?</label>
+                <label class="font-body-lg text-on-surface font-bold">8. O que procura mais?</label>
                 <select id="q8-preference" name="preference" class="bg-surface-bright border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors w-full appearance-none" required>
-                    <option value="" disabled selected>Selecione uma opção...</option>
-                    <option value="Filmes e séries">Filmes e séries</option>
-                    <option value="Canais ao vivo">Canais ao vivo</option>
-                    <option value="Futebol e esportes">Futebol e esportes</option>
-                    <option value="Conteúdo infantil">Conteúdo infantil</option>
-                    <option value="Tudo junto">Tudo junto!</option>
+                    <option value="" disabled selected>Selecione sua preferência...</option>
+                    <option value="Filmes e Séries">◉ Filmes e Séries</option>
+                    <option value="Futebol">◉ Futebol</option>
+                    <option value="Canais ao Vivo">◉ Canais ao Vivo</option>
+                    <option value="Todos os Esportes">◉ Todos os Esportes</option>
+                    <option value="Conteúdo Infantil">◉ Conteúdo Infantil</option>
+                    <option value="Tudo em um só lugar">◉ Tudo em um só lugar</option>
                 </select>
             </div>
 
             <!-- Q9 -->
             <div class="flex flex-col gap-2">
-                <label class="font-body-lg text-on-surface font-bold">9. Pretende assinar hoje caso goste do teste?</label>
+                <label class="font-body-lg text-on-surface font-bold">9. Pretende assinar caso goste do teste?</label>
                 <div class="flex flex-col gap-2">
                     <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 hover:bg-surface-bright cursor-pointer transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
                         <input type="radio" name="intent" value="Sim" class="text-secondary focus:ring-secondary w-5 h-5 bg-transparent border-outline-variant/50" required>

@@ -1,6 +1,7 @@
 const { handleSalesFlow } = require('../flows/sales');
 const { handleContentRequest } = require('../flows/content');
 const { handleSupportFlow } = require('../flows/support');
+const { isRegisteredLead } = require('../db/supabase');
 
 /**
  * Roteia a mensagem recebida para o fluxo correto com base no gatilho.
@@ -8,12 +9,12 @@ const { handleSupportFlow } = require('../flows/support');
  * @param {import('whatsapp-web.js').Message} msg 
  */
 async function handleMessage(client, msg) {
-    const text = msg.body;
+    const text = msg.body || '';
     
     console.log(`Mensagem recebida de ${msg.from}: ${text}`);
 
     // Fluxo 1: Vendas (Assinatura e Teste)
-    if (text.includes("Tenho interesse em assinar e acabei de preencher a triagem no site")) {
+    if (text && text.includes("Tenho interesse em assinar e acabei de preencher a triagem no site")) {
         console.log("➡️ Roteando para fluxo de VENDAS");
         await handleSalesFlow(msg);
         return;
@@ -34,11 +35,6 @@ async function handleMessage(client, msg) {
             return;
         }
     }
-
-    // Fluxo Padrão: Quando o cliente manda algo aleatório
-    // Podemos enviar para a IA bater papo, ou encaminhar para humano
-    // Por enquanto, faremos o bot dizer que está disponível para as opções do site.
-    // msg.reply("Olá! Sou o assistente virtual do Meu Stream. Atualmente só respondo a solicitações feitas através do nosso site. Acesse lá para começar!");
 }
 
 module.exports = {

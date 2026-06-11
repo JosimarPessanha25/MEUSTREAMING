@@ -14,6 +14,23 @@ if (!supabaseUrl || !supabaseKey) {
 // Inicializa o cliente do Supabase
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+async function isRegisteredLead(phone) {
+    if (!phone) return false;
+    const cleanPhone = phone.replace('@c.us', '').replace('@lid', '').replace(/\D/g, '');
+    try {
+        const { data } = await supabase
+            .from('leads')
+            .select('id')
+            .or(`phone_number.eq.${cleanPhone}@c.us,phone_number.eq.${cleanPhone}@lid,phone_number.like.%${cleanPhone}%`)
+            .limit(1);
+        return data && data.length > 0;
+    } catch (err) {
+        console.error('[isRegisteredLead] Erro ao verificar no Supabase:', err.message || err);
+        return false;
+    }
+}
+
 module.exports = {
-    supabase
+    supabase,
+    isRegisteredLead
 };
