@@ -10,6 +10,7 @@ export default function Chat() {
   const [sending, setSending] = useState(false);
   const [connected, setConnected] = useState(false);
   const [leadsMap, setLeadsMap] = useState({}); // { [rawPhone]: device }
+  const [loadingHistory, setLoadingHistory] = useState(false);
   
   const messagesEndRef = useRef(null);
   const socketRef = useRef(null);
@@ -49,6 +50,46 @@ export default function Chat() {
   useEffect(() => {
     scrollToBottom();
   }, [activeChatId, chats]);
+
+  // Carrega o histórico do WhatsApp direto do celular ao abrir uma conversa
+  useEffect(() => {
+    if (activeChatId) {
+      fetchChatHistory(activeChatId);
+    }
+  }, [activeChatId]);
+
+  async function fetchChatHistory(phone) {
+    try {
+      setLoadingHistory(true);
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+      const response = await fetch(`${backendUrl}/api/chat-history?phone=${phone}`, {
+        headers: {
+          'Bypass-Tunnel-Reminder': 'true'
+        }
+      });
+      const data = await response.json();
+      if (data.success && data.messages) {
+        setChats(prevChats => {
+          const chat = prevChats[phone] || {
+            name: formatPhone(phone),
+            device: leadsMap[phone] || null,
+            messages: []
+          };
+          return {
+            ...prevChats,
+            [phone]: {
+              ...chat,
+              messages: data.messages
+            }
+          };
+        });
+      }
+    } catch (err) {
+      console.error('Erro ao carregar histórico do chat:', err);
+    } finally {
+      setLoadingHistory(false);
+    }
+  }
 
   async function initChat() {
     try {
@@ -330,44 +371,57 @@ export default function Chat() {
               </div>
 
               {/* Mensagens */}
-              <div style={{ 
-                flex: 1, 
-                overflowY: 'auto', 
-                padding: '25px', 
-                display: 'flex', 
-                flexDirection: 'column', 
-                gap: '15px' 
-              }}>
-                {activeChat.messages.map((m, idx) => (
-                  <div 
-                    key={idx}
-                    style={{
-                      alignSelf: m.isMe ? 'flex-end' : 'flex-start',
-                      maxWidth: '65%',
-                      padding: '12px 16px',
-                      borderRadius: m.isMe ? '18px 18px 2px 18px' : '18px 18px 18px 2px',
-                      background: m.isMe ? 'linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%)' : 'rgba(255,255,255,0.06)',
-                      border: m.isMe ? 'none' : '1px solid var(--glass-border)',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                      color: 'white',
-                      position: 'relative'
-                    }}
-                  >
-                    <div style={{ fontSize: '0.95rem', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
-                      {m.body}
+              {loadingHistory ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, color: 'var(--text-secondary)' }}>
+                  <Loader2 size={40} style={{ animation: 'spin 1.5s linear infinite', marginBottom: '15px', color: 'var(--primary)' }} />
+                  <span>Buscando histórico do WhatsApp...</span>
+                </div>
+              ) : (
+                <div style={{ 
+                  flex: 1, 
+                  overflowY: 'auto', 
+                  padding: '25px', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: '15px' 
+                }}>
+                  {activeChat.messages.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '40px 10px', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+                      Nenhuma mensagem recente nesta conversa. Envie uma mensagem abaixo para começar!
                     </div>
-                    <div style={{ 
-                      fontSize: '0.7rem', 
-                      color: m.isMe ? 'rgba(255,255,255,0.6)' : 'var(--text-muted)', 
-                      textAlign: 'right', 
-                      marginTop: '6px' 
-                    }}>
-                      {new Date(m.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
-                    </div>
-                  </div>
-                ))}
-                <div ref={messagesEndRef} />
-              </div>
+                  ) : (
+                    activeChat.messages.map((m, idx) => (
+                      <div 
+                        key={idx}
+                        style={{
+                          alignSelf: m.isMe ? 'flex-end' : 'flex-start',
+                          maxWidth: '65%',
+                          padding: '12px 16px',
+                          borderRadius: m.isMe ? '18px 18px 2px 18px' : '18px 18px 18px 2px',
+                          background: m.isMe ? 'linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%)' : 'rgba(255,255,255,0.06)',
+                          border: m.isMe ? 'none' : '1px solid var(--glass-border)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                          color: 'white',
+                          position: 'relative'
+                        }}
+                      >
+                        <div style={{ fontSize: '0.95rem', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+                          {m.body}
+                        </div>
+                        <div style={{ 
+                          fontSize: '0.7rem', 
+                          color: m.isMe ? 'rgba(255,255,255,0.6)' : 'var(--text-muted)', 
+                          textAlign: 'right', 
+                          marginTop: '6px' 
+                        }}>
+                          {new Date(m.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+              )}
 
               {/* Input de Envio */}
               <form onSubmit={handleSend} style={{ 

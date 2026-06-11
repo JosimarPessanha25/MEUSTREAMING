@@ -33,6 +33,32 @@ app.post('/api/send-message', async (req, res) => {
     }
 });
 
+// Rota de API para buscar histórico recente de mensagens do celular
+app.get('/api/chat-history', async (req, res) => {
+    const { phone } = req.query;
+    if (!phone) {
+        return res.status(400).json({ error: 'O parâmetro "phone" é necessário.' });
+    }
+    try {
+        const chatId = phone.includes('@c.us') || phone.includes('@lid') ? phone : `${phone}@c.us`;
+        const chat = await client.getChatById(chatId);
+        const messages = await chat.fetchMessages({ limit: 30 }); // buscar últimas 30 mensagens
+        
+        // Formatar mensagens para o front-end
+        const formattedMessages = messages.map(m => ({
+            id: m.id.id,
+            body: m.body,
+            timestamp: m.timestamp * 1000, // converter para milissegundos
+            isMe: m.fromMe
+        }));
+        
+        res.json({ success: true, messages: formattedMessages });
+    } catch (err) {
+        console.error('Erro ao buscar histórico:', err);
+        res.status(500).json({ error: err.message || 'Erro ao buscar histórico.' });
+    }
+});
+
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
