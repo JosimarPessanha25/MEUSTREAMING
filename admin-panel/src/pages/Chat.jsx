@@ -52,16 +52,25 @@ export default function Chat() {
 
   async function initChat() {
     try {
-      // 1. Buscar Leads do Supabase para mapear dispositivos
-      const { data } = await supabase.from('leads').select('phone_number, device');
+      // Buscar Leads do Supabase para preencher a lista de contatos inicial
+      const { data } = await supabase.from('leads').select('phone_number, device').order('created_at', { ascending: false });
       const tempMap = {};
+      const initialChats = {};
+      
       if (data) {
         data.forEach(lead => {
           // Limpa o telefone para bater com o formato do whatsapp
           const cleanPhone = lead.phone_number.replace('@c.us', '').replace('@lid', '');
           tempMap[cleanPhone] = lead.device;
+          
+          initialChats[cleanPhone] = {
+            name: formatPhone(cleanPhone),
+            device: lead.device || null,
+            messages: []
+          };
         });
         setLeadsMap(tempMap);
+        setChats(initialChats);
       }
     } catch (err) {
       console.error('Erro ao iniciar chat:', err);
